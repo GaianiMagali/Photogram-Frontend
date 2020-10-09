@@ -3,12 +3,13 @@ import { Link } from 'react-router-dom';
 
 import { useAuth } from '../../hooks/auth';
 import { SearchContainer } from '../Search/SearchContainer';
+import { ModalUploadPhoto } from '../Modal/ModalUploadPhoto';
 
 import logo from '../../assets/logo.svg';
 import { FiSearch } from 'react-icons/fi';
 import { FaUser, FaSignOutAlt } from 'react-icons/fa';
-
 import { Nav, Container, Img, ContainerSearch, Input, ContainerOptions } from './styles';
+
 
 export const Header = () => {
     const { user, signOut } = useAuth();
@@ -33,7 +34,8 @@ export const Header = () => {
                 </ContainerSearch>
 
                 <ContainerOptions>
-                    <Link to={`/profile/${user.username}`}>
+                    <ModalUploadPhoto />
+                    <Link to={`/profile/${user.username}`} style={{ marginLeft: "15px" }}>
                         <FaUser color="#222" size={25} />
                     </Link>
 
