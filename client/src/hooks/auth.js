@@ -18,7 +18,9 @@ const AuthProvider = ({ children }) => {
         return { user: null, token: null };
     });
 
+
     const signIn = useCallback(async ({ username, password }) => {
+
         const auth = await api.post('/auth', { username, password })
 
         if (auth.status === 200) {
@@ -35,6 +37,9 @@ const AuthProvider = ({ children }) => {
                 token
             })
         }
+
+        return auth;
+
     }, [])
 
 

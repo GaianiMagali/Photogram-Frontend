@@ -2,7 +2,6 @@ import React, { useRef, useCallback } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
-import api from "../../services/api";
 
 import getValidationErrors from '../../utils/getValidationErrors';
 
@@ -17,7 +16,7 @@ export const Signin = () => {
     const history = useHistory();
     const formRef = useRef(null);
 
-    const { signIn } = useAuth();
+    const { signIn} = useAuth();
 
     const handleSubmit = useCallback(async (data) => {
         try {
@@ -33,7 +32,7 @@ export const Signin = () => {
 
             // await api.post('/auth', data);
 
-            signIn({ password: data.password, username: data.username })
+            await signIn({ password: data.password, username: data.username })
 
             history.push('/');
 
@@ -46,7 +45,7 @@ export const Signin = () => {
 
             toast.error(error.response.data.message);
         }
-    }, [history])
+    }, [history, signIn])
 
     return (
         <Container>

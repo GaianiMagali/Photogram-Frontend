@@ -3,11 +3,11 @@ import api from '../services/api';
 
 const UploadContext = createContext();
 
-const UploadProvider = ({children}) => {
+const UploadProvider = ({ children }) => {
 
-  const[data, setData] = useState(null);
-  const[loading, setLoading] = useState(false);
-  const[error, setError] = useState(false);
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   const uploadPhotoAction = useCallback(async (dataImage) => {
     try {
@@ -20,29 +20,26 @@ const UploadProvider = ({children}) => {
       const res = await api.post('/photos', fd);
       console.log(res);
 
-      if(res.status === 200) {
+      if (res.status === 200) {
         setData(res.data);
       }
-
-
-      
     } catch (error) {
-      if(error.response.status === 500) {
+      if (error.response.status === 500) {
         setError(true);
       }
-    }finally {
+    } finally {
       setLoading(false)
     }
-  },[])
+  }, [])
 
   const resetValues = useCallback(() => {
     setData(null);
     setLoading(false);
     setError(false);
-  } ,[])
+  }, [])
 
   return (
-    <UploadContext.Provider value={{data, loading, error, uploadPhotoAction, resetValues}}>
+    <UploadContext.Provider value={{ data, loading, error, uploadPhotoAction, resetValues }}>
       {children}
     </UploadContext.Provider>
   )
@@ -51,7 +48,7 @@ const UploadProvider = ({children}) => {
 function useUpload() {
   const context = useContext(UploadContext);
 
-  if(!context) throw new Error('useUpload must be used within an UploadProvider');
+  if (!context) throw new Error('useUpload must be used within an UploadProvider');
 
   return context;
 }
