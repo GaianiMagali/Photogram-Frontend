@@ -5,13 +5,14 @@ import { StyledModal } from './styles';
 
 import { Upload } from '../Upload/Upload';
 import { useUpload } from '../../hooks/upload';
+import { useFeed } from '../../hooks/feed';
 
 export const ModalUploadPhoto = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [opacity, setOpacity] = useState(0);
 
   const { data, resetValues } = useUpload();
-
+  const { addFeed } = useFeed();
 
   const toggleModal = useCallback(() => {
     setIsOpen(!isOpen)
@@ -33,9 +34,9 @@ export const ModalUploadPhoto = () => {
   useEffect(() => {
     if (data) {
       toggleModal();
-      //addFeed(data);
+      addFeed(data);
       resetValues();
-      //addFeed,
+
     }
   }, [data, resetValues, toggleModal])
 

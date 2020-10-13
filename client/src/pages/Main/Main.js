@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { Profile } from '../../components/Profile/Profile';
+import React, { useEffect, useState, useRef } from 'react';
 import { Spinner } from '../../components/Spinner/Spinner';
 import { useAuth } from '../../hooks/auth';
 import { Layout } from '../Layout/Layout';
@@ -7,18 +6,66 @@ import { EmptyMessage } from '../../components/EmptyMessage/EmptyMessage';
 
 import { Aside, ContainerOwner, ContainerFollows, ContainerFooter, ContainerFeeds, Container } from './styles';
 import { useFollow } from '../../hooks/follow';
+import { Profile } from '../../components/Profile/Profile';
 import { useFeed } from '../../hooks/feed';
 import { CardFeed } from '../../components/CardFeed/CardFeed';
 
+
 export const Main = () => {
+    const [page, setPage] = useState(0);
+
     const { user } = useAuth();
     const { follows, loading, getFollows } = useFollow();
-    const { feeds, getFeeds } = useFeed()
+    const { feeds, getFeeds, totalFeeds, setFeeds } = useFeed();
 
     useEffect(() => {
         getFollows();
-        getFeeds();
+        getFeeds(page);
+
+        return () => {
+            setFeeds([]);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+    useEffect(() => {
+        if (page > 0 && feeds.length < totalFeeds) {
+            getFeeds(page);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [getFeeds, page])
+
+    const observer = useRef(
+        new IntersectionObserver(
+            async entries => {
+                const first = entries[0];
+                if (first.isIntersecting) {
+                    setPage((state) => state + 1);
+                }
+            },
+            {
+                threshold: 0.2
+            }
+        )
+    )
+
+    const [element, setElement] = useState(null);
+
+    useEffect(() => {
+        const currentElement = element;
+        const currentObserver = observer.current;
+
+        if (currentElement) {
+            currentObserver.observe(currentElement);
+        }
+
+        return () => {
+            if (currentElement) {
+                currentObserver.unobserve(currentElement);
+            }
+        }
+    }, [element])
+
 
     return (
         <Layout>
@@ -64,6 +111,20 @@ export const Main = () => {
                     {feeds && feeds.map(feed => (
                         <CardFeed key={feed.photo.id} feed={feed} />
                     ))}
+
+                    {!!feeds && feeds.length > 0 && (
+                        <button
+                            ref={setElement}
+                            style={{
+                                width: "100%",
+                                height: "100px",
+                                marginBottom: "10px",
+                                display: "block",
+                                background: "transparent",
+                                border: "none"
+                            }}
+                        />
+                    )}
                 </ContainerFeeds>
             </Container>
         </Layout>

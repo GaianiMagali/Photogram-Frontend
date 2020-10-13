@@ -7,34 +7,32 @@ const FeedContext = createContext();
 const FeedProvider = ({ children }) => {
 
     const [feeds, setFeeds] = useState([]);
-    const [loading, setLoading] = useState(null);
-    const [message, setMessage] = useState("");
-    const [error, setError] = useState(null);
-    const [page, setPage] = useState(0);
+
     const [totalFeeds, setTotalFeeds] = useState(null);
     // const[loading, setLoading] = useState(false);
 
     const getFeeds = useCallback(async (page = 0) => {
         try {
-            setError(null)
-            setLoading(true);
-            const res = await api.get("/feeds", {
+            // setLoading(true);
+            const response = await api.get("/feeds", {
                 params: {
                     page,
                     pageSize: 12
                 }
             });
 
-            if (res.status === 200) {
-                setFeeds((state) => [...state, ...res.data]);
-              
-                //res.header("X-Total-Count", count);
-                // setTotalFeeds(res.headers["x-total-count"])
+            console.log(response.data);
+            setFeeds(response.data)
+
+            if (response.status === 200) {
+                
+                //setFeeds((state) => [...state, ...response.data]);
+                setTotalFeeds(response.headers["x-total-count"])
             }
         } catch (error) {
-            console.log(error.res);
+            console.log(error);
         } finally {
-            setLoading(false)
+            // setLoading(false)
         }
     }, [])
 
@@ -68,7 +66,7 @@ const FeedProvider = ({ children }) => {
     }, [])
 
     const addFeed = useCallback((data) => {
-        setFeeds((state) => [data, ...state]);
+        setFeeds((state) => ([data, ...state]));
     }, [])
 
     return (

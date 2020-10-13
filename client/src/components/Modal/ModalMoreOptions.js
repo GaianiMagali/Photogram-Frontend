@@ -3,11 +3,15 @@ import { Link } from 'react-router-dom';
 
 import { StyledModal, MoreOptions } from './styles';
 import { FiMoreHorizontal } from 'react-icons/fi';
-
+import { useFeed } from '../../hooks/feed';
+import { useFollow } from '../../hooks/follow';
 
 export const ModalMoreOptions = React.memo(({ isAuthor, photo }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [opacity, setOpacity] = useState(0);
+
+    const { deletePhotoAction, deleteFollowAction } = useFeed();
+    const { removeFollow } = useFollow();
 
     const toggleModal = useCallback(() => {
         setIsOpen(!isOpen);
@@ -25,6 +29,17 @@ export const ModalMoreOptions = React.memo(({ isAuthor, photo }) => {
             setTimeout(resolve, 200);
         })
     }, [])
+
+    const handleDelete = useCallback((photo) => {
+        deletePhotoAction(photo);
+        toggleModal();
+    }, [deletePhotoAction, toggleModal])
+
+    const handleFollow = useCallback((idUser) => {
+        deleteFollowAction(idUser);
+        removeFollow(idUser);
+        toggleModal();
+    }, [deleteFollowAction, removeFollow, toggleModal])
 
 
     return (
