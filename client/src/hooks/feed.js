@@ -21,12 +21,9 @@ const FeedProvider = ({ children }) => {
                 }
             });
 
-            console.log(response.data);
-            setFeeds(response.data)
-
             if (response.status === 200) {
                 
-                //setFeeds((state) => [...state, ...response.data]);
+                setFeeds((state) => [...state, ...response.data]);
                 setTotalFeeds(response.headers["x-total-count"])
             }
         } catch (error) {

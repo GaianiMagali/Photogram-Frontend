@@ -10,7 +10,6 @@ import { Profile } from '../../components/Profile/Profile';
 import { useFeed } from '../../hooks/feed';
 import { CardFeed } from '../../components/CardFeed/CardFeed';
 
-
 export const Main = () => {
     const [page, setPage] = useState(0);
 
@@ -38,6 +37,7 @@ export const Main = () => {
     const observer = useRef(
         new IntersectionObserver(
             async entries => {
+                console.log(entries);
                 const first = entries[0];
                 if (first.isIntersecting) {
                     setPage((state) => state + 1);
@@ -59,6 +59,7 @@ export const Main = () => {
             currentObserver.observe(currentElement);
         }
 
+        //destruye el observador
         return () => {
             if (currentElement) {
                 currentObserver.unobserve(currentElement);

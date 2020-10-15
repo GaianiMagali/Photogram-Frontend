@@ -36,9 +36,8 @@ export const ModalUploadPhoto = () => {
       toggleModal();
       addFeed(data);
       resetValues();
-
     }
-  }, [data, resetValues, toggleModal])
+  }, [addFeed, data, resetValues, toggleModal])
 
   return (
     <>
