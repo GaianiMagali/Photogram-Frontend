@@ -42,7 +42,6 @@ const FeedProvider = ({ children }) => {
                     }
                 }
             )
-
             if (response.status === 200) {
                 setFeeds((state) => state.filter((item) => item.photo.id !== photo.id))
             }
@@ -56,6 +55,7 @@ const FeedProvider = ({ children }) => {
             const response = await api.post(`/follows/${idUser}`);
             if (response.status === 200) {
                 setFeeds((state) => state.filter((item) => item.photo.user_id !== idUser))
+                console.log()
             }
         } catch (error) {
             toast.error('Ocurrió un error');

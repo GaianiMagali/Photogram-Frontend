@@ -31,12 +31,11 @@ export const Post = () => {
             setComments(photo.getComments);
             setIsLiked(isLiked);
             setIsAuthor(isAuthor);
-            
-           
         }
         getPost();
     }, [photo_id])
 
+    
     if (!post) {
         return (
             <Container>
@@ -82,17 +81,21 @@ export const Post = () => {
                         </ContainerComments>
 
                         <ContainerOptions>
-                            
                             <span>{post.LikesCount} Me gusta</span>
-                            
                             <div>{/* Aqui el boton de like */}</div>
+
+                            <TimeStyle>
+                                <TimeAgo
+                                    date={`${post.createdAt}`}
+                                    formatter={formatter}
+                                />
+                            </TimeStyle>
                         </ContainerOptions>
 
                         <ContainerComment>{/* La sección de comentario */}</ContainerComment>
 
                     </ContainerPost>
                 </Container>
-
             </Layout>
         )
     }

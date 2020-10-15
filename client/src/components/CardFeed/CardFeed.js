@@ -134,7 +134,6 @@ export const CardFeed = ({ feed }) => {
                 >
                     Ver más detalles
                 </Link>
-
             </CardDetails>
 
             <CardFooter>
