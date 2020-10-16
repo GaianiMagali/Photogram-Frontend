@@ -41,6 +41,8 @@ export const HeaderPost = styled.div`
   padding: 10px 16px;
   font: 400 14px "Roboto";
   border-bottom: 1px solid #e6e6e6;
+  display: flex;
+  display: "inline-block"
 
 `;
 
@@ -72,8 +74,11 @@ export const TimeStyle = styled.span`
   display:"block";
 `;
 
-export const ContainerOptions = styled(HeaderPost)`
-   position: relative;
-   align-items: ${props => (props.direction === "row" ? "center" : "")};
+export const ContainerOptions = styled.div`
+  padding: 10px 16px;
+  font: 400 14px "Roboto";
+  border-bottom: 1px solid #e6e6e6;
+  position: relative;
+  align-items: ${props => (props.direction === "row" ? "center" : "")};
   display: "inline-block"
 `;

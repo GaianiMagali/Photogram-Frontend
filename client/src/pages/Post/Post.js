@@ -17,7 +17,10 @@ import { CardFooter as ContainerComment } from '../../components/CardFeed/styles
 
 import { toast } from 'react-toastify';
 
+import { ModalOptionsPost } from '../../components/Modal/ModalOptionsPost';
+import {ModalOptionsComments} from '../../components/Modal/ModalOptionsComments';
 const formatter = buildFormatter(spanishString);
+
 
 export const Post = () => {
     const { photo_id } = useParams();
@@ -49,9 +52,12 @@ export const Post = () => {
             setCommentsPhoto(photo.getComments);
             setIsLiked(isLiked);
             setIsAuthor(isAuthor);
+
         }
         getPost();
     }, [photo_id, isLiked])
+
+    console.log(photo_id);
 
     const toggleLike = useCallback(async (photo_id) => {
         const response = await api.post(`/likes/${photo_id}`);
@@ -79,7 +85,7 @@ export const Post = () => {
 
     }, [comment, photo_id])
 
-
+    console.log(post);
     if (!post) {
         return (
             <Container>
@@ -92,17 +98,20 @@ export const Post = () => {
                 <Container>
                     <ContainerPhoto>
                         <Img src={post.photo_url} alt={post.body} />
-
                     </ContainerPhoto>
 
                     <ContainerPost>
+
                         <HeaderPost>
                             <Profile
                                 img={post.uploadedBy.avatar_url}
                                 username={post.uploadedBy.username}
                             />
                             <p>{post.body}</p>
+
+                            <ModalOptionsPost isAuthor={isAuthor} photo={post} />
                         </HeaderPost>
+
 
                         <ContainerComments>
                             {commentsPhoto.length > 0 ? commentsPhoto.map((comment) => (
@@ -122,6 +131,8 @@ export const Post = () => {
                                     </TimeStyle>
                                 </div>
                             )) : <p>No hay  comentarios para mostrar</p>}
+
+                            <ModalOptionsComments isAuthor={isAuthor} photo={post} />
                         </ContainerComments>
 
                         <ContainerOptions >

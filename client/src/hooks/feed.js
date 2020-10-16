@@ -66,6 +66,9 @@ const FeedProvider = ({ children }) => {
         setFeeds((state) => ([data, ...state]));
     }, [])
 
+    
+
+
     return (
         <FeedContext.Provider value={{ feeds, totalFeeds, getFeeds, deletePhotoAction, deleteFollowAction, addFeed, setFeeds }}>
             {children}
