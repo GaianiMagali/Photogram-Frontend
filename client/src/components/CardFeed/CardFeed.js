@@ -13,7 +13,7 @@ import { Link } from 'react-router-dom';
 import api from '../../services/api';
 import { toast } from 'react-toastify';
 
-const CommentList  = lazy(() => import("../CommentList/CommentList"));
+const CommentList = lazy(() => import("../CommentList/CommentList"));
 
 const formatter = buildFormatter(spanishString);
 
@@ -82,13 +82,13 @@ export const CardFeed = ({ feed }) => {
                     <FaHeart
                         onClick={() => toggleLike(photo.id)}
                         size={20}
-                        style={{ color: "#FC4850", marginRight: 10 }}
+                        style={{ color: "#FC4850", marginRight: 10, cursor: "pointer" }}
                     />
                 ) : (
                         <FiHeart
                             onClick={() => toggleLike(photo.id)}
                             size={20}
-                            style={{ marginRight: 10 }}
+                            style={{ marginRight: 10, cursor: "pointer" }}
                         />
                     )}
 

@@ -68,7 +68,12 @@ export const TimeStyle = styled.span`
   font-size: 8px;
   letter-spacing: 0.2px;
   text-transform: uppercase;
+  position: "absolute";
+  display:"block";
 `;
 
-export const ContainerOptions = styled(HeaderPost)``;
-export const ContainerComment = styled.div``;
+export const ContainerOptions = styled(HeaderPost)`
+   position: relative;
+   align-items: ${props => (props.direction === "row" ? "center" : "")};
+  display: "inline-block"
+`;
