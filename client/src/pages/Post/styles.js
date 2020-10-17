@@ -46,10 +46,15 @@ export const HeaderPost = styled.div`
 
 `;
 
-export const ContainerComments = styled(HeaderPost)`
+export const ContainerComments = styled.div`
+  padding: 10px 16px;
+  font: 400 14px "Roboto";
+  border-bottom: 1px solid #e6e6e6;
   max-height: 400px;
   min-height: 400px;
   overflow: auto;
+ // display: "inline-block";
+  
 
   ::-webkit-scrollbar {
     width: 4px;

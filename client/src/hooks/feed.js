@@ -22,10 +22,11 @@ const FeedProvider = ({ children }) => {
             });
 
             if (response.status === 200) {
-                
+                // console.log(response.data);
                 setFeeds((state) => [...state, ...response.data]);
                 setTotalFeeds(response.headers["x-total-count"])
             }
+
         } catch (error) {
             console.log(error);
         } finally {
@@ -55,7 +56,7 @@ const FeedProvider = ({ children }) => {
             const response = await api.post(`/follows/${idUser}`);
             if (response.status === 200) {
                 setFeeds((state) => state.filter((item) => item.photo.user_id !== idUser))
-                console.log()
+                // console.log(state)
             }
         } catch (error) {
             toast.error('Ocurrió un error');
@@ -65,8 +66,6 @@ const FeedProvider = ({ children }) => {
     const addFeed = useCallback((data) => {
         setFeeds((state) => ([data, ...state]));
     }, [])
-
-    
 
 
     return (

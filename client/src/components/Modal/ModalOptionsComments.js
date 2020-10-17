@@ -1,19 +1,20 @@
-import React, { useState, useCallback} from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import React, { useState, useCallback } from 'react';
+import api from '../../services/api';
 
 import { StyledModal, MoreOptions } from './styles';
 import { FiMoreHorizontal } from 'react-icons/fi';
 import { useFeed } from '../../hooks/feed';
 import { useFollow } from '../../hooks/follow';
+import { useAuth } from '../../hooks/auth';
 
-export const ModalOptionsComments = React.memo(({ isAuthor, photo }) => {
-    const history = useHistory();
+export const ModalOptionsComments = React.memo(({ isAuthor, photo, comment, deleteComment }) => {
 
     const [isOpen, setIsOpen] = useState(false);
     const [opacity, setOpacity] = useState(0);
 
-    const { deletePhotoAction, deleteFollowAction } = useFeed();
+    const { deleteFollowAction } = useFeed();
     const { removeFollow } = useFollow();
+    const { user } = useAuth()
 
     const toggleModal = useCallback(() => {
         setIsOpen(!isOpen);
@@ -32,20 +33,17 @@ export const ModalOptionsComments = React.memo(({ isAuthor, photo }) => {
         })
     }, [])
 
-    const handleDelete = useCallback((photo) => {
-        deletePhotoAction(photo);
-        toggleModal();
-        history.push('/');
-    }, [deletePhotoAction, toggleModal])
-
-
-
     const handleFollow = useCallback((idUser) => {
         deleteFollowAction(idUser);
         removeFollow(idUser);
         toggleModal();
     }, [deleteFollowAction, removeFollow, toggleModal])
 
+    const handleDeleteComment = useCallback(async (comment) => {
+        await api.delete(`/comments/${comment.id}`);
+        deleteComment(comment.id)
+        toggleModal()
+    }, [deleteComment, toggleModal])
 
     return (
         <>
@@ -61,10 +59,10 @@ export const ModalOptionsComments = React.memo(({ isAuthor, photo }) => {
                 backgroundProps={{ opacity }}
             >
 
-                {isAuthor ? (
+                {user.username === comment.postedBy.username ? (
                     <MoreOptions>
-                        <li className="red" onClick={() => handleDelete(photo)}>
-                            Eliminar Commentarios
+                        <li className="red" onClick={() => handleDeleteComment(comment)}>
+                            Eliminar comentario
                         </li>
                         <li onClick={toggleModal}>Cancelar</li>
                     </MoreOptions>

@@ -9,7 +9,6 @@ import avatar from '../../assets/avatar.png';
 
 import { Container, DescriptionContainer, ImageProfile, Username, Button, ButtonFollow, CountsContainer, Description, ContainerPhotos, Photo } from './styles';
 
-
 export const Profile = React.memo(() => {
   const { username } = useParams();
 
@@ -23,11 +22,8 @@ export const Profile = React.memo(() => {
   const [isProfile, setIsProfile] = useState(false);
   const [count, setCount] = useState(null);
 
-  useEffect(() => {
-    getProfile()
-  }, [username, isFollow]);
 
-  async function getProfile() {
+  const getProfile = useCallback(async () => {
     const response = await api.get(`/users/${username}`, {
       params: {
         page: 0,
@@ -47,8 +43,12 @@ export const Profile = React.memo(() => {
     setUser(user);
     console.log(isFollowing);
     setPhotos(user.photosUploads);
-  }
 
+  }, [username])
+
+  useEffect(() => {
+    getProfile()
+  }, [username, isFollow]);
 
   const loadingMemo = useMemo(() => {
     return user && user.id ? false : true;

@@ -18,7 +18,7 @@ import { CardFooter as ContainerComment } from '../../components/CardFeed/styles
 import { toast } from 'react-toastify';
 
 import { ModalOptionsPost } from '../../components/Modal/ModalOptionsPost';
-import {ModalOptionsComments} from '../../components/Modal/ModalOptionsComments';
+import { ModalOptionsComments } from '../../components/Modal/ModalOptionsComments';
 const formatter = buildFormatter(spanishString);
 
 
@@ -57,8 +57,6 @@ export const Post = () => {
         getPost();
     }, [photo_id, isLiked])
 
-    console.log(photo_id);
-
     const toggleLike = useCallback(async (photo_id) => {
         const response = await api.post(`/likes/${photo_id}`);
 
@@ -85,7 +83,11 @@ export const Post = () => {
 
     }, [comment, photo_id])
 
-    console.log(post);
+    const deleteComment = useCallback(async (idComment) => {
+        const comentarios = commentsPhoto.filter(comment => comment.id !== idComment)
+        setCommentsPhoto(comentarios)
+    }, [commentsPhoto])
+
     if (!post) {
         return (
             <Container>
@@ -115,24 +117,27 @@ export const Post = () => {
 
                         <ContainerComments>
                             {commentsPhoto.length > 0 ? commentsPhoto.map((comment) => (
-                                <div key={comment.id} style={{ marginBottom: "10px" }}>
-                                    <Profile
-                                        img={comment.postedBy.avatar_url}
-                                        username={comment.postedBy.username}
-                                    />
-
-                                    <p style={{ margin: '5px 0' }}>{comment.body}</p>
-
-                                    <TimeStyle>
-                                        <TimeAgo
-                                            date={`${comment.createdAt}`}
-                                            formatter={formatter}
+                                <div key={comment.id} style={{ display: "flex", justifyContent: "space-between" }}>
+                                    <div style={{ marginBottom: "10px" }}>
+                                        <Profile
+                                            img={comment.postedBy.avatar_url}
+                                            username={comment.postedBy.username}
                                         />
-                                    </TimeStyle>
+
+                                        <p style={{ margin: '5px 0' }}>{comment.body}</p>
+
+                                        <TimeStyle>
+                                            <TimeAgo
+                                                date={`${comment.createdAt}`}
+                                                formatter={formatter}
+                                            />
+                                        </TimeStyle>
+                                    </div>
+                                    <ModalOptionsComments isAuthor={isAuthor} comment={comment} deleteComment={deleteComment} />
                                 </div>
                             )) : <p>No hay  comentarios para mostrar</p>}
 
-                            <ModalOptionsComments isAuthor={isAuthor} photo={post} />
+
                         </ContainerComments>
 
                         <ContainerOptions >

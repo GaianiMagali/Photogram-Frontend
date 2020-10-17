@@ -1,5 +1,5 @@
-import React, { useState, useCallback} from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import React, { useState, useCallback } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import { StyledModal, MoreOptions } from './styles';
 import { FiMoreHorizontal } from 'react-icons/fi';
@@ -36,9 +36,7 @@ export const ModalOptionsPost = React.memo(({ isAuthor, photo }) => {
         deletePhotoAction(photo);
         toggleModal();
         history.push('/');
-    }, [deletePhotoAction, toggleModal])
-
-
+    }, [deletePhotoAction, toggleModal, history])
 
     const handleFollow = useCallback((idUser) => {
         deleteFollowAction(idUser);
