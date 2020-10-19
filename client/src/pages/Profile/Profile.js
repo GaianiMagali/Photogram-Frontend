@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo, useCallback } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useHistory } from 'react-router-dom';
 import { Layout } from '../Layout/Layout';
 import { useFeed } from '../../hooks/feed';
 
@@ -11,6 +11,7 @@ import { Container, DescriptionContainer, ImageProfile, Username, Button, Button
 
 export const Profile = React.memo(() => {
   const { username } = useParams();
+  const history = useHistory();
 
   const { deleteFollowAction } = useFeed();
 
@@ -80,7 +81,7 @@ export const Profile = React.memo(() => {
             <Username>{user.username}</Username>
 
             {isProfile ? (
-              <Button>Editar perfil</Button>
+              <Button onClick={() => history.push(`/edit-profile/${user.username}`)}>Editar perfil </Button>
             ) : isFollow ? (
               <ButtonFollow
                 onClick={() => handleFollowButton(user.id)}
@@ -118,6 +119,6 @@ export const Profile = React.memo(() => {
           ))}
         </ContainerPhotos>
       </Container>
-    </Layout>
+    </Layout >
   )
 })
