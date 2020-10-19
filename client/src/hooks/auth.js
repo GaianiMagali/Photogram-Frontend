@@ -28,6 +28,7 @@ const AuthProvider = ({ children }) => {
             api.defaults.headers.authorization = `Bearer ${token}`;
 
             const user = await api.get('/auth/me');
+            //console.log(user.data);
 
             localStorage.setItem('@Photogram:token', token);
             localStorage.setItem('@Photogram:user', JSON.stringify(user.data));
@@ -37,10 +38,17 @@ const AuthProvider = ({ children }) => {
                 token
             })
         }
-
+        //console.log(auth);
         return auth;
-
     }, [])
+
+    const updateDataUser = useCallback((newUser) => {
+        const { user } = data;
+        localStorage.setItem('@Photogram:user', JSON.stringify({ ...user, ...newUser }));
+        setData({
+            ...data, user: { ...user, ...newUser }
+        })
+    })
 
 
     const signOut = useCallback(() => {
@@ -54,7 +62,7 @@ const AuthProvider = ({ children }) => {
     }, [])
 
     return (
-        <AuthContext.Provider value={{ user: data.user, signIn, signOut }}>
+        <AuthContext.Provider value={{ user: data.user, signIn, signOut, updateDataUser }}>
             {children}
         </AuthContext.Provider>
     )

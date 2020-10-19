@@ -32,6 +32,7 @@ export const Profile = React.memo(() => {
       }
     });
 
+
     const { isFollow: isFollowing, isProfile: isprofile, count_followers, count_follows, count_photos, user } = response.data;
 
     setIsFollow(isFollowing);
@@ -81,7 +82,7 @@ export const Profile = React.memo(() => {
             <Username>{user.username}</Username>
 
             {isProfile ? (
-              <Button onClick={() => history.push(`/edit-profile/${user.username}`)}>Editar perfil </Button>
+              <Button onClick={() => history.push(`/edit-profile/${user.id}`)}>Editar perfil </Button>
             ) : isFollow ? (
               <ButtonFollow
                 onClick={() => handleFollowButton(user.id)}

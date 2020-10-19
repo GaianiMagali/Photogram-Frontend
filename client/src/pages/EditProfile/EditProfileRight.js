@@ -2,8 +2,11 @@ import React, { useEffect } from 'react';
 import { useForm } from './useForm';
 import { ContainerRight, ContainerRightHeader, ContainerRightForm } from './styles';
 import api from '../../services/api';
+import { useAuth } from '../../hooks/auth';
+import avatar from '../../assets/avatar.png';
 
-export const EditProfileRight = ({ username }) => {
+export const EditProfileRight = ({ id }) => {
+    const { updateDataUser, user } = useAuth();
     const [inputValues, handleChange, setInputValues] = useForm({
         name: "",
         email: "",
@@ -16,12 +19,9 @@ export const EditProfileRight = ({ username }) => {
         getUser()
     }, [])
 
-    // console.log(inputValues);
-
-
     const getUser = async () => {
-        const { data } = await api.get(`/users/${username}`);
-        console.log(data);
+        const { data } = await api.get(`/users/user/${Number(id)}`);
+        //console.log(res.data);
         setInputValues({
             name: data.user.name,
             email: data.user.email,
@@ -31,9 +31,11 @@ export const EditProfileRight = ({ username }) => {
         })
     }
 
-    const updateProfile = async () => {
-        const res = await api.put('/users', { ...inputValues });   
-        console.log(res.data);
+    const updateProfile = async (e) => {
+        e.preventDefault()
+        await api.put('/users', { ...inputValues });
+        updateDataUser(inputValues)
+        //console.log(res.data);
     }
 
     return (
@@ -41,10 +43,10 @@ export const EditProfileRight = ({ username }) => {
             <ContainerRight>
                 <ContainerRightHeader>
                     <img
-                        src="https://escritoresdehoy.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png"
+                        src={user.avatar_url || avatar} alt={user.name}
                     />
                     <div >
-                        <h1>jono.jsx</h1>
+                        <h1>{user.username}</h1>
                         <span>Cambiar Foto de perfil</span>
                     </div>
                 </ContainerRightHeader>
