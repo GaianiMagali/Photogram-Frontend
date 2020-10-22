@@ -32,7 +32,11 @@ export const MoreOptions = styled.ul`
     }
     transition: all 250ms ease-in-out;
     &.red {
-      color: #fc4850;
+      color: #fc4850; 
+     
+    }
+    &.blue{
+      color: #0095f6;
     }
     &:hover {
       background-color: #e6e6e6;

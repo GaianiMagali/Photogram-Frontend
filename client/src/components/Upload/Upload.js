@@ -55,7 +55,6 @@ export const Upload = React.memo(({ toggleModal }) => {
             title="image preview"
             onClick={() => inputFile.current.click()}
           />
-
         ) : (
             <MessagePreview onClick={() => inputFile.current.click()}>
               Seleccione su fotografía

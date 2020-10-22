@@ -48,7 +48,8 @@ const AuthProvider = ({ children }) => {
         setData({
             ...data, user: { ...user, ...newUser }
         })
-    })
+        console.log(newUser);
+    }, [data])
 
 
     const signOut = useCallback(() => {

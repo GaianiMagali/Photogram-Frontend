@@ -1,13 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useForm } from './useForm';
 import { ContainerRight, ContainerRightHeader, ContainerRightForm } from './styles';
 import api from '../../services/api';
 import { useAuth } from '../../hooks/auth';
 import avatar from '../../assets/avatar.png';
+import { ModalUploadAvatar } from '../../components/Modal/ModalUploadAvatar';
+
 
 export const EditProfileRight = ({ id }) => {
     const { updateDataUser, user } = useAuth();
+
     const [inputValues, handleChange, setInputValues] = useForm({
+        avatar_url: "",
         name: "",
         email: "",
         username: "",
@@ -21,8 +25,9 @@ export const EditProfileRight = ({ id }) => {
 
     const getUser = async () => {
         const { data } = await api.get(`/users/user/${Number(id)}`);
-        //console.log(res.data);
+        console.log(data);
         setInputValues({
+            avatar_url: data.user.avatar_url,
             name: data.user.name,
             email: data.user.email,
             username: data.user.username,
@@ -38,6 +43,27 @@ export const EditProfileRight = ({ id }) => {
         //console.log(res.data);
     }
 
+    const updatePhoto = useCallback(async (dataImage, toggleModal) => {
+        try {
+            const fd = new FormData();
+
+            fd.append('file', dataImage, dataImage.name);
+
+            const { data } = await api.put('/users/avatar', fd);
+            console.log(data.avatar_url);
+            updateDataUser({
+                avatar_url: data.avatar_url
+            })
+
+            toggleModal()
+
+        } catch (error) {
+            console.log(error);
+        }
+    })
+
+    console.log(inputValues.avatar_url);
+
     return (
         <>
             <ContainerRight>
@@ -47,7 +73,10 @@ export const EditProfileRight = ({ id }) => {
                     />
                     <div >
                         <h1>{user.username}</h1>
-                        <span>Cambiar Foto de perfil</span>
+
+                        <ModalUploadAvatar
+                           updatePhoto={updatePhoto}
+                        />
                     </div>
                 </ContainerRightHeader>
 
