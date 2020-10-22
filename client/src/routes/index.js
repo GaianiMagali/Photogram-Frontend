@@ -11,6 +11,8 @@ import { Signup } from '../pages/Signup/Signup';
 import { Post } from '../pages/Post/Post';
 import { Profile } from '../pages/Profile/Profile';
 import { EditProfile } from '../pages/EditProfile/EditProfile';
+import { ForgotPassword } from '../pages/ForgotPassword/ForgotPassword';
+import { ResetPassword } from '../pages/ResetPassword/ResetPassword';
 
 const Routes = () => {
     return (
@@ -31,6 +33,8 @@ const Routes = () => {
                 <Route exact path="/photo/:photo_id" component={Post} isPrivate />
                 <Route exact path="/edit-profile/:id" component={EditProfile} isPrivate />
                 <Route exact path="/profile/:username" component={Profile} isPrivate />
+                <Route exact path="/forgot-password" component={ForgotPassword} />
+                <Route exact path="/reset-password/:token" component={ResetPassword} />
                 <Route exact path="/signin" component={Signin} />
                 <Route exact path="/signup" component={Signup} />
             </Switch>

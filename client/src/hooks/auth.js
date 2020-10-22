@@ -1,10 +1,12 @@
 import React, { createContext, useCallback, useContext, useState } from 'react';
 
+
 import api from '../services/api';
 
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
+   
 
     const [data, setData] = useState(() => {
         const token = localStorage.getItem('@Photogram:token');
@@ -62,8 +64,10 @@ const AuthProvider = ({ children }) => {
         })
     }, [])
 
+
+   
     return (
-        <AuthContext.Provider value={{ user: data.user, signIn, signOut, updateDataUser }}>
+        <AuthContext.Provider value={{ user: data.user, signIn, signOut, updateDataUser}}>
             {children}
         </AuthContext.Provider>
     )

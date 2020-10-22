@@ -16,7 +16,7 @@ export const Signin = () => {
     const history = useHistory();
     const formRef = useRef(null);
 
-    const { signIn} = useAuth();
+    const { signIn } = useAuth();
 
     const handleSubmit = useCallback(async (data) => {
         try {
@@ -65,10 +65,14 @@ export const Signin = () => {
 
                     <hr />
 
-
                     <span className="footer">
-                        Mira lo que tus amigos tienen preparado para ti.
-              </span>
+                        <p>
+
+                            <Link to="forgot-password" >¿Olvidaste tu contraseña?</Link>
+
+                        </p>
+                        {/* Mira lo que tus amigos tienen preparado para ti. */}
+                    </span>
 
                 </Form>
 

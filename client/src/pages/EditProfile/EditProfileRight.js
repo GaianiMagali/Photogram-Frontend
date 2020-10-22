@@ -1,6 +1,7 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useForm } from './useForm';
 import { ContainerRight, ContainerRightHeader, ContainerRightForm } from './styles';
+import { useHistory } from 'react-router-dom';
 import api from '../../services/api';
 import { useAuth } from '../../hooks/auth';
 import avatar from '../../assets/avatar.png';
@@ -8,7 +9,9 @@ import { ModalUploadAvatar } from '../../components/Modal/ModalUploadAvatar';
 
 
 export const EditProfileRight = ({ id }) => {
-    const { updateDataUser, user } = useAuth();
+    const { updateDataUser, user, signOut } = useAuth();
+    const history = useHistory();
+    //const [disabled, setDisabled] = useState(true);
 
     const [inputValues, handleChange, setInputValues] = useForm({
         avatar_url: "",
@@ -64,6 +67,12 @@ export const EditProfileRight = ({ id }) => {
 
     console.log(inputValues.avatar_url);
 
+    const removeUser = async (idUser) => {
+        await api.delete(`/users/user/${idUser}`);
+        signOut()
+        history.push("/signin")
+    }
+
     return (
         <>
             <ContainerRight>
@@ -75,7 +84,7 @@ export const EditProfileRight = ({ id }) => {
                         <h1>{user.username}</h1>
 
                         <ModalUploadAvatar
-                           updatePhoto={updatePhoto}
+                            updatePhoto={updatePhoto}
                         />
                     </div>
                 </ContainerRightHeader>
@@ -139,7 +148,13 @@ export const EditProfileRight = ({ id }) => {
 
                         <div className="form-button">
                             <button type="submit">Enviar</button>
-                            <span style={{ color: "#0095f6" }}>Inhabilitar mi cuenta permanentemente</span>
+
+                            <span
+                                style={{ color: "#0095f6", cursor: 'pointer'  }}
+                                onClick={() => removeUser(user.id)}
+                            >
+                                Inhabilitar mi cuenta permanentemente
+                            </span>
                         </div>
                     </form>
                 </ContainerRightForm>
