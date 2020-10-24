@@ -67,11 +67,8 @@ export const Signin = () => {
 
                     <span className="footer">
                         <p>
-
                             <Link to="forgot-password" >¿Olvidaste tu contraseña?</Link>
-
                         </p>
-                        {/* Mira lo que tus amigos tienen preparado para ti. */}
                     </span>
 
                 </Form>

@@ -31,6 +31,7 @@ export const Signup = () => {
             await schema.validate(data, { abortEarly: false });
     
             await api.post('/users', data);
+            //console.log(data);
     
             toast.success('Te registraste con éxito!')
     
@@ -67,7 +68,6 @@ export const Signup = () => {
               <button type="submit">Regístrate</button>
     
               <hr />
-    
     
               <span className="footer">
                 Al registrarte, aceptas nuestras Condiciones, la Política de datos y la Política de cookies

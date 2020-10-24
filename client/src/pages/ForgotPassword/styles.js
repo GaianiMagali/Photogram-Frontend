@@ -51,16 +51,19 @@ export const Form = styled(UnformWeb)`
   p{
     color:#8e8e8e;
     font-size: 14px;
-    text-align: center;
+    text-align: center; 
+    margin-top:20px;
+
+    a {
+      color: #262626;
+      font: bold 13px "Roboto" ;
+      font-size: 15px;
+      text-align: center;
+      text-decoration: none;
+      outline:none;
+    }
   }
 
-  a{
-    margin-top:20px;
-    color: #262626;
-    font: bold 13px "Roboto" ;
-    font-size: 15px;
-    text-align: center;
-  }
 
   input{
       width: 100%;
@@ -150,8 +153,12 @@ export const Footer = styled.div`
     font-size: 15px;
 
     a {
-      color: #3897f0;
+      color: #262626;
+      font: bold 13px "Roboto" ;
+      font-size: 15px;
+      text-align: center;
       text-decoration: none;
+      outline:none;
     }
   }
 `
