@@ -3,9 +3,10 @@ import { useField } from '@unform/core';
 
 import { Container } from './styles';
 
-export const Input = React.memo (({ name, ...rest }) => {
+export const Input = React.memo(({ name, ...rest }) => {
     const inputRef = useRef(null);
     const { fieldName, defaultValue, registerField, error } = useField(name);
+
 
     useEffect(() => {
         registerField({
@@ -14,6 +15,7 @@ export const Input = React.memo (({ name, ...rest }) => {
             path: 'value'
         })
     }, [fieldName, registerField])
+
 
     return (
 

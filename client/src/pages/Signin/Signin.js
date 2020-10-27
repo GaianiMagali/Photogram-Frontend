@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
@@ -12,11 +12,35 @@ import { Input } from '../../components/Input/Input';
 import { Container, FromContainer, Form, Footer } from './styles';
 import { useAuth } from '../../hooks/auth';
 
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+
 export const Signin = () => {
     const history = useHistory();
     const formRef = useRef(null);
-
+    const [showpwd, setShowpwd] = useState(false);
+    const [cheked, setCheked] = useState(false);
+    const [rememberUser, setRememberUser] = useState({});
     const { signIn } = useAuth();
+
+    useEffect(() => {
+        const item = localStorage.getItem('@Photogram:username&password');
+        console.log(JSON.parse(item));
+        if (item) {
+            setRememberUser(JSON.parse(item))
+            setCheked(true);
+        }
+    }, []);
+
+    useEffect(() => {
+        if (cheked === false) {
+            localStorage.removeItem('@Photogram:username&password')
+            console.log("cheked false");
+        }
+    }, [cheked]);
+
+    const handleChecked = ({ target }) => {
+        setCheked(target.checked)
+    }
 
     const handleSubmit = useCallback(async (data) => {
         try {
@@ -28,11 +52,10 @@ export const Signin = () => {
             })
 
             await schema.validate(data, { abortEarly: false });
-            console.log(data);
-
-            // await api.post('/auth', data);
 
             await signIn({ password: data.password, username: data.username })
+
+            cheked && localStorage.setItem('@Photogram:username&password', JSON.stringify({ password: data.password, username: data.username }));
 
             history.push('/');
 
@@ -45,11 +68,11 @@ export const Signin = () => {
 
             toast.error(error.response.data.message);
         }
-    }, [history, signIn])
+    }, [cheked, history, signIn])
+
 
     return (
         <Container>
-
             <FromContainer>
                 <Form ref={formRef} onSubmit={handleSubmit} >
                     <img src={logo} alt="photogram" />
@@ -57,11 +80,44 @@ export const Signin = () => {
 
                     <hr />
 
-                    <Input name="username" placeholder="Usuario" />
+                    <Input name="username" placeholder="Usuario" defaultValue={rememberUser.username} />
 
-                    <Input type="password" name="password" placeholder="Contraseña" />
+                    <div style={{ position: "relative", width: "100%" }}>
+                        <Input type={showpwd ? "text" : "password"} name="password" placeholder="Contraseña" defaultValue={rememberUser.password} />
 
-                    <button type="submit">Regístrate</button>
+                        {showpwd ?
+                            <FaEye
+                                onClick={() => setShowpwd(!showpwd)}
+                                style={{
+                                    position: "absolute",
+                                    top: "10px",
+                                    right: "5px",
+                                    cursor: "pointer",
+                                }}
+                            />
+                            :
+                            <FaEyeSlash
+                                onClick={() => setShowpwd(!showpwd)}
+                                style={{
+                                    position: "absolute",
+                                    top: "10px",
+                                    right: "5px",
+                                    cursor: "pointer",
+                                }}
+                            />
+                        }
+                    </div>
+
+                    <label>
+                        <input
+                            type="checkbox"
+                            checked={cheked}
+                            onChange={handleChecked}
+                        />
+                        <span>Recordar usuario</span>
+                    </label>
+
+                    <button type="submit">Iniciar sesión</button>
 
                     <hr />
 
@@ -79,7 +135,7 @@ export const Signin = () => {
                     </p>
                 </Footer>
             </FromContainer>
-        </Container>
+        </Container >
     )
 }
 

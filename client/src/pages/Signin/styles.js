@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 import { Form as UnformWeb } from '@unform/web';
 
@@ -19,6 +19,18 @@ export const FromContainer = styled.div`
 
   @media (min-width: 450px) {
     max-width: 350px;
+  }
+`
+
+const scalecheck = keyframes`
+  0 % {
+    transform: scale(0);
+  }
+  90 % {
+    transform: scale(1.4);
+  }
+  100 % {
+    transform: scale(1);
   }
 `
 
@@ -80,6 +92,30 @@ export const Form = styled(UnformWeb)`
     &:hover {
       background-color: #38ff;
     }
+  }
+
+  label{
+    padding-right:149px;
+    padding-top:2px;
+    content: "\f096";
+	  font-size: inherit;
+	  -webkit-font-smoothing: antialiased;
+	  -moz-osx-font-smoothing: grayscale;
+    input{
+      content: \f14a;
+      color: #1061ee;
+      animation: ${scalecheck} 0.1s; 
+      cursor: pointer;
+    }
+
+    span{
+      margin: 5px;
+      color: #333;
+      cursor: pointer;
+      font-size: 11px
+    }
+  
+    
   }
 `
 
