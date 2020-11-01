@@ -1,6 +1,5 @@
 import React, { useState, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
-
 import { StyledModal, MoreOptions } from './styles';
 import { FiMoreHorizontal } from 'react-icons/fi';
 import { useFeed } from '../../hooks/feed';
@@ -58,24 +57,19 @@ export const ModalOptionsPost = React.memo(({ isAuthor, photo }) => {
                 opacity={opacity}
                 backgroundProps={{ opacity }}
             >
-
-                {isAuthor ? (
-                    <MoreOptions>
+                <MoreOptions>
+                    {isAuthor ? (
                         <li className="red" onClick={() => handleDelete(photo)}>
                             Eliminar publicación
                         </li>
-                        <li onClick={toggleModal}>Cancelar</li>
-                    </MoreOptions>
-                ) : (
-                        <MoreOptions>
+                    ) : (
                             <li className="red" onClick={() => handleFollow(photo.user_id)}>
                                 Dejar de seguir
                             </li>
-                            <li onClick={toggleModal}>Cancelar</li>
-                        </MoreOptions>
-                    )}
+                        )}
+                    <li onClick={toggleModal}>Cancelar</li>
+                </MoreOptions>
             </StyledModal>
         </>
-
     )
 })

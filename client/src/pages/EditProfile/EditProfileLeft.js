@@ -7,7 +7,7 @@ export const EditProfileLeft = () => {
             <ContainerLeft>
                 <ul>
                     <li>
-                        <a href="#">Editar perfil</a>
+                        <p>Editar perfil</p>
                     </li>
                 </ul>
             </ContainerLeft>

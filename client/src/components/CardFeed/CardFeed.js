@@ -54,6 +54,8 @@ export const CardFeed = ({ feed }) => {
         const response = await api.post(`/comments/${photo.id}`, { body: comment });
         if (response.status === 200) {
             setCommentsPhoto((state) => [...state, response.data]);
+            //setCommentsPhoto([...commentsPhoto, response.data])
+
             setComment('');
             setDisabled(true);
         }
@@ -85,12 +87,12 @@ export const CardFeed = ({ feed }) => {
                         style={{ color: "#FC4850", marginRight: 10, cursor: "pointer" }}
                     />
                 ) : (
-                        <FiHeart
-                            onClick={() => toggleLike(photo.id)}
-                            size={20}
-                            style={{ marginRight: 10, cursor: "pointer" }}
-                        />
-                    )}
+                    <FiHeart
+                        onClick={() => toggleLike(photo.id)}
+                        size={20}
+                        style={{ marginRight: 10, cursor: "pointer" }}
+                    />
+                )}
 
                 <Link to={`/photo/${photo.id}`}>
                     <FaComment size={20} color="#2c2c2c" />

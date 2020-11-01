@@ -1,6 +1,5 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { useUpload } from '../../hooks/upload';
-
 import { Container, ImagePreview, MessagePreview, Body, Button } from './styles';
 import { FiX } from 'react-icons/fi';
 

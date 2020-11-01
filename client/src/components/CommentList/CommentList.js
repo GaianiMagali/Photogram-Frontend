@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
 import TimeAgo from "react-timeago";
 import spanishString from "react-timeago/lib/language-strings/es";
 import buildFormatter from "react-timeago/lib/formatters/buildFormatter";
@@ -9,8 +8,8 @@ import { Container, Comment, TimeAgo as StyleTimeAgo } from './styles';
 
 const formatter = buildFormatter(spanishString);
 
-
 const CommentList = React.memo(({ comments }) => {
+
     return (
         <Container>
             {comments &&
@@ -35,7 +34,6 @@ const CommentList = React.memo(({ comments }) => {
                 ))
             }
         </Container>
-
     )
 })
 

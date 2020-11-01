@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { useForm } from './useForm';
+import React, { useEffect, useCallback } from 'react';
+import { useForm } from '../../hooks/useForm';
 import { ContainerRight, ContainerRightHeader, ContainerRightForm } from './styles';
 import { useHistory } from 'react-router-dom';
 import api from '../../services/api';
@@ -11,9 +11,9 @@ import { ModalUploadAvatar } from '../../components/Modal/ModalUploadAvatar';
 export const EditProfileRight = ({ id }) => {
     const { updateDataUser, user, signOut } = useAuth();
     const history = useHistory();
-    //const [disabled, setDisabled] = useState(true);
+    // const [disabled, setDisabled] = useState(true);
 
-    const [inputValues, handleChange, setInputValues] = useForm({
+    const [inputValues, handleChange, setInputValues, reset] = useForm({
         avatar_url: "",
         name: "",
         email: "",
@@ -23,28 +23,29 @@ export const EditProfileRight = ({ id }) => {
     })
 
     useEffect(() => {
+        const getUser = async () => {
+            const { data } = await api.get(`/users/user/${Number(id)}`);
+            setInputValues({
+                avatar_url: data.user.avatar_url,
+                name: data.user.name || '',
+                email: data.user.email || '',
+                username: data.user.username || '',
+                bio: data.user.bio || '',
+                phone: data.user.phone || ''
+            })
+        }
         getUser()
+
+        return () => {
+            reset()
+        }
     }, [])
 
-    const getUser = async () => {
-        const { data } = await api.get(`/users/user/${Number(id)}`);
-        console.log(data);
-        setInputValues({
-            avatar_url: data.user.avatar_url,
-            name: data.user.name,
-            email: data.user.email,
-            username: data.user.username,
-            bio: data.user.bio,
-            phone: data.user.phone
-        })
-    }
-
-    const updateProfile = async (e) => {
+    const updateProfile = useCallback(async (e) => {
         e.preventDefault()
         await api.put('/users', { ...inputValues });
         updateDataUser(inputValues)
-        //console.log(res.data);
-    }
+    }, [inputValues])
 
     const updatePhoto = useCallback(async (dataImage, toggleModal) => {
         try {
@@ -53,7 +54,7 @@ export const EditProfileRight = ({ id }) => {
             fd.append('file', dataImage, dataImage.name);
 
             const { data } = await api.put('/users/avatar', fd);
-            console.log(data.avatar_url);
+
             updateDataUser({
                 avatar_url: data.avatar_url
             })
@@ -63,15 +64,13 @@ export const EditProfileRight = ({ id }) => {
         } catch (error) {
             console.log(error);
         }
-    })
+    }, [updateDataUser])
 
-    console.log(inputValues.avatar_url);
-
-    const removeUser = async (idUser) => {
+    const removeUser = useCallback(async (idUser) => {
         await api.delete(`/users/user/${idUser}`);
         signOut()
         history.push("/signin")
-    }
+    }, [history, signOut])
 
     return (
         <>
@@ -127,7 +126,7 @@ export const EditProfileRight = ({ id }) => {
                         </div>
 
                         <div>
-                            <span>Correo Electronico</span>
+                            <span>Correo Electrónico</span>
                             <input
                                 type="email"
                                 name="email"
@@ -150,7 +149,7 @@ export const EditProfileRight = ({ id }) => {
                             <button type="submit">Enviar</button>
 
                             <span
-                                style={{ color: "#0095f6", cursor: 'pointer'  }}
+                                style={{ color: "#0095f6", cursor: 'pointer' }}
                                 onClick={() => removeUser(user.id)}
                             >
                                 Inhabilitar mi cuenta permanentemente
@@ -158,7 +157,6 @@ export const EditProfileRight = ({ id }) => {
                         </div>
                     </form>
                 </ContainerRightForm>
-
             </ContainerRight>
         </>
     )

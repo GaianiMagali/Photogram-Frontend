@@ -6,6 +6,7 @@ import { FollowProvider } from '../hooks/follow';
 import { FeedProvider } from '../hooks/feed';
 
 const Providers = ({ children }) => {
+    
     return (
         <AuthProvider>
             <UploadProvider>

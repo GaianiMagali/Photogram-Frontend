@@ -3,7 +3,6 @@ import { Spinner } from '../../components/Spinner/Spinner';
 import { useAuth } from '../../hooks/auth';
 import { Layout } from '../Layout/Layout';
 import { EmptyMessage } from '../../components/EmptyMessage/EmptyMessage';
-
 import { Aside, ContainerOwner, ContainerFollows, ContainerFooter, ContainerFeeds, Container } from './styles';
 import { useFollow } from '../../hooks/follow';
 import { Profile } from '../../components/Profile/Profile';
@@ -11,8 +10,7 @@ import { useFeed } from '../../hooks/feed';
 import { CardFeed } from '../../components/CardFeed/CardFeed';
 
 export const Main = () => {
-    const [page, setPage] = useState(0);
-
+    const [page, setPage] = useState(1);
     const { user } = useAuth();
     const { follows, loading, getFollows } = useFollow();
     const { feeds, getFeeds, totalFeeds, setFeeds } = useFeed();
@@ -28,7 +26,7 @@ export const Main = () => {
     }, [])
 
     useEffect(() => {
-        if (page > 0 && feeds.length < totalFeeds) {
+        if (page <= Math.ceil(totalFeeds / 2)) {
             getFeeds(page);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -37,7 +35,6 @@ export const Main = () => {
     const observer = useRef(
         new IntersectionObserver(
             async entries => {
-                console.log(entries);
                 const first = entries[0];
                 if (first.isIntersecting) {
                     setPage((state) => state + 1);
@@ -109,8 +106,8 @@ export const Main = () => {
                 </Aside>
 
                 <ContainerFeeds>
-                    {feeds && feeds.map(feed => (
-                        <CardFeed key={feed.photo.id} feed={feed} />
+                    {feeds && feeds.map((feed, i) => (
+                        <CardFeed key={i} feed={feed} />
                     ))}
 
                     {!!feeds && feeds.length > 0 && (

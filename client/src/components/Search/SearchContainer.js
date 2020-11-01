@@ -1,10 +1,7 @@
 import React from 'react';
-
 import { Spinner } from '../Spinner/Spinner';
 import { Profile } from '../Profile/Profile';
-
 import { useSearch } from '../../hooks/search';
-
 import { Container, ContainerResult, ContainerProfile, ContainerEmpty } from './styles';
 
 export const SearchContainer = React.memo(({ toggleClose }) => {

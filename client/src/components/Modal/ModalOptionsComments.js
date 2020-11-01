@@ -15,7 +15,6 @@ export const ModalOptionsComments = React.memo(({ isAuthor, photo, comment, dele
     const { deleteFollowAction } = useFeed();
     const { removeFollow } = useFollow();
     const { user } = useAuth()
-    console.log(user);
 
     const toggleModal = useCallback(() => {
         setIsOpen(!isOpen);

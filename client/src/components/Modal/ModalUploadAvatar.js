@@ -1,7 +1,6 @@
 import React, { useState, useCallback, useRef } from 'react';
 import { StyledModal, MoreOptions } from './styles';
 
-
 export const ModalUploadAvatar = React.memo(({ updatePhoto }) => {
     const inputFile = useRef(null);
     const [isOpen, setIsOpen] = useState(false);
@@ -49,13 +48,14 @@ export const ModalUploadAvatar = React.memo(({ updatePhoto }) => {
             >
 
                 <MoreOptions>
-                        {image ? (<li onClick={() => updatePhoto(inputFile.current.files[0], toggleModal)}>
+                    {
+                        image ? (<li onClick={() => updatePhoto(inputFile.current.files[0], toggleModal)}>
                             Enviar foto
                         </li>
                         ) : <li className="blue" onClick={() => inputFile.current.click()}>
                                 Subir foto
                             </li>
-                        }
+                    }
 
                     <li className="red">
                         Eliminar foto actual

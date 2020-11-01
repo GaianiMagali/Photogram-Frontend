@@ -43,7 +43,6 @@ export const Profile = React.memo(() => {
       count_photos,
     })
     setUser(user);
-    console.log(isFollowing);
     setPhotos(user.photosUploads);
 
   }, [username])

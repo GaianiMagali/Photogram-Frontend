@@ -1,9 +1,6 @@
 import React from 'react';
-
 import { Link } from 'react-router-dom';
-
 import avatar from '../../assets/avatar.png'
-
 import { Container, Img, Username, Name } from './styles';
 
 export const Profile = ({ direction, username, name, usidebar = false, img, isOwner = false }) => {

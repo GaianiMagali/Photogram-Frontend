@@ -1,12 +1,9 @@
 import React from 'react';
-
 import GlobalStyle from './styles/GlobalStyle';
 import { ModalProvider, BaseModalBackground } from 'styled-react-modal';
 import styled from "styled-components";
 import './App.css';
-
 import Providers from './hooks';
-
 import Routes from './routes/index';
 
 const FadingBackground = styled(BaseModalBackground)`

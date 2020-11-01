@@ -7,31 +7,25 @@ const FeedContext = createContext();
 const FeedProvider = ({ children }) => {
 
     const [feeds, setFeeds] = useState([]);
+    const [totalFeeds, setTotalFeeds] = useState(0);
 
-    const [totalFeeds, setTotalFeeds] = useState(null);
-    // const[loading, setLoading] = useState(false);
-
-    const getFeeds = useCallback(async (page = 0) => {
+    const getFeeds = useCallback(async (page=0) => {
         try {
-            // setLoading(true);
             const response = await api.get("/feeds", {
                 params: {
                     page,
-                    pageSize: 12
+                    pageSize: 2
                 }
             });
 
             if (response.status === 200) {
-                // console.log(response.data);
-                setFeeds((state) => [...state, ...response.data]);
-                setTotalFeeds(response.headers["x-total-count"])
+                setFeeds((state) => [...state, ...response.data.feeds]);
+                setTotalFeeds(response.data.totalFeeds)
             }
-
+            
         } catch (error) {
             console.log(error);
-        } finally {
-            // setLoading(false)
-        }
+        } 
     }, [])
 
     const deletePhotoAction = useCallback(async (photo) => {
@@ -56,7 +50,6 @@ const FeedProvider = ({ children }) => {
             const response = await api.post(`/follows/${idUser}`);
             if (response.status === 200) {
                 setFeeds((state) => state.filter((item) => item.photo.user_id !== idUser))
-                // console.log(state)
             }
         } catch (error) {
             toast.error('Ocurrió un error');

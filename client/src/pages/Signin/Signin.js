@@ -2,16 +2,11 @@ import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
-
 import getValidationErrors from '../../utils/getValidationErrors';
-
 import logo from '../../assets/logo.svg';
-
 import { Input } from '../../components/Input/Input';
-
 import { Container, FromContainer, Form, Footer } from './styles';
 import { useAuth } from '../../hooks/auth';
-
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 export const Signin = () => {
@@ -24,7 +19,7 @@ export const Signin = () => {
 
     useEffect(() => {
         const item = localStorage.getItem('@Photogram:username&password');
-        console.log(JSON.parse(item));
+       
         if (item) {
             setRememberUser(JSON.parse(item))
             setCheked(true);
@@ -34,7 +29,6 @@ export const Signin = () => {
     useEffect(() => {
         if (cheked === false) {
             localStorage.removeItem('@Photogram:username&password')
-            console.log("cheked false");
         }
     }, [cheked]);
 

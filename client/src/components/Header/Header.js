@@ -44,10 +44,9 @@ export const Header = () => {
                     <Img src={logo} alt="logo" />
                 </Link>
 
-
                 <ContainerSearch>
                     <FiSearch color="#ccc" size={15} />
-                    <Input placeholder="Buscar" value={term} onChange={(e) => setTerm(e.target.value)} />
+                    <Input placeholder="Buscar" value={term} onChange={({target}) => setTerm(target.value)} />
                     {term.length > 0 && <SearchContainer toggleClose={toggleClose} />}
                 </ContainerSearch>
 
@@ -60,7 +59,6 @@ export const Header = () => {
 
                     <FaSignOutAlt color="#222" size={25} onClick={signOut} />
                 </ContainerOptions>
-
             </Container>
         </Nav>
     )

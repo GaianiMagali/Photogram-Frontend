@@ -3,29 +3,21 @@ import { useParams } from 'react-router-dom';
 import { Profile } from '../../components/Profile/Profile';
 import api from '../../services/api';
 import { Layout } from '../Layout/Layout';
-
 import TimeAgo from "react-timeago";
 import spanishString from "react-timeago/lib/language-strings/es";
 import buildFormatter from "react-timeago/lib/formatters/buildFormatter";
-
 import { FaHeart, FaComment } from 'react-icons/fa';
 import { FiHeart } from 'react-icons/fi';
-
 import { Container, ContainerPhoto, Img, ContainerPost, HeaderPost, ContainerComments, TimeStyle, ContainerOptions } from './styles';
-
 import { CardFooter as ContainerComment } from '../../components/CardFeed/styles';
-
 import { toast } from 'react-toastify';
-
 import { ModalOptionsPost } from '../../components/Modal/ModalOptionsPost';
 import { ModalOptionsComments } from '../../components/Modal/ModalOptionsComments';
 const formatter = buildFormatter(spanishString);
 
-
 export const Post = () => {
     const { photo_id } = useParams();
     const inputRef = useRef(null);
-
     const [post, setPost] = useState(null);
     const [commentsPhoto, setCommentsPhoto] = useState([]);
     const [comment, setComment] = useState('');
@@ -44,16 +36,14 @@ export const Post = () => {
     useEffect(() => {
         async function getPost() {
             const response = await api.get(`/photos/${photo_id}`);
-
-            //const { photo } = response.data;
             const { isAuthor, isLiked, photo } = response.data;
 
             setPost(photo);
             setCommentsPhoto(photo.getComments);
             setIsLiked(isLiked);
             setIsAuthor(isAuthor);
-
         }
+
         getPost();
     }, [photo_id, isLiked])
 
@@ -67,8 +57,8 @@ export const Post = () => {
         }
     }, [isLiked])
 
-    const handleComment = useCallback((event) => {
-        setComment(event.target.value);
+    const handleComment = useCallback(({target}) => {
+        setComment(target.value);
     }, [])
 
     const handleSubmit = useCallback(async (event) => {
@@ -189,7 +179,6 @@ export const Post = () => {
                                 </button>
                             </form>
                         </ContainerComment>
-
                     </ContainerPost>
                 </Container>
             </Layout>

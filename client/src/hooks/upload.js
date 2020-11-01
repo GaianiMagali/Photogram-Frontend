@@ -18,9 +18,6 @@ const UploadProvider = ({ children }) => {
       fd.append('body', dataImage.body);
 
       const res = await api.post('/photos', fd);
-      console.log(dataImage.file);
-      console.log(dataImage.file.name);
-      console.log(res);
 
       if (res.status === 200) {
         setData(res.data);

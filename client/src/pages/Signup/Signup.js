@@ -31,8 +31,7 @@ export const Signup = () => {
             await schema.validate(data, { abortEarly: false });
     
             await api.post('/users', data);
-            //console.log(data);
-    
+          
             toast.success('Te registraste con éxito!')
     
             history.push('/signin');

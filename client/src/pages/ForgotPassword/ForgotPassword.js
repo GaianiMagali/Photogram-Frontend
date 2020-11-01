@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import logo from '../../assets/logo.svg';
 import api from '../../services/api';
-import { useForm } from '../EditProfile/useForm';
+import { useForm } from '../../hooks/useForm';
 import { Container, FromContainer, Form, Footer } from './styles';
 
 export const ForgotPassword = () => {
@@ -22,8 +22,7 @@ export const ForgotPassword = () => {
         } catch (error) {
             toast.error(error.response.data.message);
         }
-
-    }, [inputValues])
+    }, [inputValues, reset])
 
     return (
         <Container>
@@ -56,7 +55,6 @@ export const ForgotPassword = () => {
                         <Link to="signin"> Volver al inicio de sesión</Link>
                     </p>
                 </Footer>
-
             </FromContainer>
         </Container>
     )

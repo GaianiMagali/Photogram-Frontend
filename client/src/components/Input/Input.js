@@ -1,12 +1,10 @@
 import React, { useRef, useEffect } from 'react';
 import { useField } from '@unform/core';
-
 import { Container } from './styles';
 
 export const Input = React.memo(({ name, ...rest }) => {
     const inputRef = useRef(null);
     const { fieldName, defaultValue, registerField, error } = useField(name);
-
 
     useEffect(() => {
         registerField({
@@ -16,9 +14,7 @@ export const Input = React.memo(({ name, ...rest }) => {
         })
     }, [fieldName, registerField])
 
-
     return (
-
         <Container>
             <input
                 defaultValue={defaultValue}
@@ -26,7 +22,6 @@ export const Input = React.memo(({ name, ...rest }) => {
                 {...rest}
                 autoComplete="off"
             />
-
             {error && <p>{error}</p>}
         </Container>
     )

@@ -1,6 +1,5 @@
 import React, { useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-
 import { StyledModal, MoreOptions } from './styles';
 import { FiMoreHorizontal } from 'react-icons/fi';
 import { useFeed } from '../../hooks/feed';
@@ -56,27 +55,26 @@ export const ModalMoreOptions = React.memo(({ isAuthor, photo }) => {
                 backgroundProps={{ opacity }}
             >
 
-                {isAuthor ? (
-                    <MoreOptions>
-                        <li>Ir a la publicación</li>
-                        <li className="red" onClick={() => handleDelete(photo)}>
-                            Eliminar publicación
-                        </li>
-                        <li onClick={toggleModal}>Cancelar</li>
-                    </MoreOptions>
-                ) : (
-                        <MoreOptions>
-                            <li>
-                                <Link to={`/photo/${photo.id}`}>Ir a la publicación</Link>
+                <MoreOptions>
+                    <li>
+                        <Link to={`/photo/${photo.id}`}>Ir a la publicación</Link>
+                    </li>
+                    {
+                        isAuthor ? (
+                            <li className="red" onClick={() => handleDelete(photo)}>
+                                Eliminar publicación
                             </li>
-                            <li className="red" onClick={() => handleFollow(photo.user_id)}>
-                                Dejar de seguir
-                            </li>
-                            <li onClick={toggleModal}>Cancelar</li>
-                        </MoreOptions>
-                    )}
+                        ) : (
+                                <li className="red" onClick={() => handleFollow(photo.user_id)}>
+                                    Dejar de seguir
+                                </li>
+                            )
+                    }
+                    <li onClick={toggleModal}>
+                        Cancelar
+                    </li>
+                </MoreOptions>
             </StyledModal>
         </>
-
     )
 })
