@@ -36,7 +36,27 @@ const AuthProvider = ({ children }) => {
             })
         }
         return auth;
+
     }, [])
+
+    const authWithGoogle = useCallback(async (user) => {
+            
+        const { data } = await api.post('/auth/authWithGoogle', { user });
+       
+        console.log(data);
+     
+        api.defaults.headers.authorization = `Bearer ${data}`;
+        const userMe = await api.get('/auth/me');
+
+        localStorage.setItem('@Photogram:token', data);
+        localStorage.setItem('@Photogram:user', JSON.stringify(userMe.data));
+
+        setData({
+            user: userMe.data,
+            token:data
+        })
+},[]
+    )
 
     const updateDataUser = useCallback((newUser) => {
         const { user } = data;
@@ -57,7 +77,7 @@ const AuthProvider = ({ children }) => {
     }, [])
 
     return (
-        <AuthContext.Provider value={{ user: data.user, signIn, signOut, updateDataUser}}>
+        <AuthContext.Provider value={{ user: data.user, signIn, signOut, updateDataUser,authWithGoogle}}>
             {children}
         </AuthContext.Provider>
     )

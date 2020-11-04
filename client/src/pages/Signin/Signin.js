@@ -8,6 +8,7 @@ import { Input } from '../../components/Input/Input';
 import { Container, FromContainer, Form, Footer } from './styles';
 import { useAuth } from '../../hooks/auth';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { AuthGoogle } from '../../components/AuthGoogle/AuthGoogle';
 
 export const Signin = () => {
     const history = useHistory();
@@ -114,6 +115,8 @@ export const Signin = () => {
                     <button type="submit">Iniciar sesión</button>
 
                     <hr />
+
+                    <AuthGoogle buttonTitle={"Iniciar sesión con Google"}/>
 
                     <span className="footer">
                         <p>

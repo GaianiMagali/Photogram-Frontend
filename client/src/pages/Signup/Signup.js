@@ -5,13 +5,13 @@ import { toast } from 'react-toastify';
 import api from "../../services/api";
 
 import getValidationErrors from '../../utils/getValidationErrors';
-
 import gif from '../../assets/mobilegif.gif';
 import logo from '../../assets/logo.svg';
 
 import { Input } from '../../components/Input/Input';
 
 import { Container, Gif, FromContainer, Form, Footer } from './styles';
+import { AuthGoogle } from '../../components/AuthGoogle/AuthGoogle';
 
 export const Signup = () => {
     const history = useHistory();
@@ -67,6 +67,8 @@ export const Signup = () => {
               <button type="submit">Regístrate</button>
     
               <hr />
+
+              <AuthGoogle buttonTitle={"Registrarse con Google"} />
     
               <span className="footer">
                 Al registrarte, aceptas nuestras Condiciones, la Política de datos y la Política de cookies

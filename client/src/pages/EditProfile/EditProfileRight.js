@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import api from '../../services/api';
 import { useAuth } from '../../hooks/auth';
 import avatar from '../../assets/avatar.png';
-import { ModalUploadAvatar } from '../../components/Modal/ModalUploadAvatar';
+import { ModalUpdateAvatar } from '../../components/Modal/ModalUpdateAvatar';
 
 
 export const EditProfileRight = ({ id }) => {
@@ -66,6 +66,20 @@ export const EditProfileRight = ({ id }) => {
         }
     }, [updateDataUser])
 
+    const deletePhoto = useCallback(async (toggleModal) => {
+        try {
+            await api.put('/users/avatarDelete');
+
+            updateDataUser({
+                avatar_url: null
+            })
+
+            toggleModal()
+        } catch (error) {
+            console.log(error);
+        }
+    })
+
     const removeUser = useCallback(async (idUser) => {
         await api.delete(`/users/user/${idUser}`);
         signOut()
@@ -82,8 +96,8 @@ export const EditProfileRight = ({ id }) => {
                     <div >
                         <h1>{user.username}</h1>
 
-                        <ModalUploadAvatar
-                            updatePhoto={updatePhoto}
+                        <ModalUpdateAvatar
+                            updatePhoto={updatePhoto} deletePhoto={deletePhoto}
                         />
                     </div>
                 </ContainerRightHeader>
