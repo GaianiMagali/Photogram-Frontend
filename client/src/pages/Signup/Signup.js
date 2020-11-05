@@ -66,8 +66,7 @@ export const Signup = () => {
     
               <button type="submit">Regístrate</button>
     
-              <hr />
-
+              <center><div className="divider"><b>O</b></div></center>
               <AuthGoogle buttonTitle={"Registrarse con Google"} />
     
               <span className="footer">

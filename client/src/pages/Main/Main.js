@@ -17,7 +17,8 @@ export const Main = () => {
 
     useEffect(() => {
         getFollows();
-        getFeeds(page);
+        //setFeeds([])
+        getFeeds(page)
 
         return () => {
             setFeeds([]);
@@ -26,11 +27,11 @@ export const Main = () => {
     }, [])
 
     useEffect(() => {
-        if (page <= Math.ceil(totalFeeds / 2)) {
+        if (page > 1 && Math.ceil(totalFeeds / 2)) {
             getFeeds(page);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [getFeeds, page])
+    }, [page])
+
 
     const observer = useRef(
         new IntersectionObserver(

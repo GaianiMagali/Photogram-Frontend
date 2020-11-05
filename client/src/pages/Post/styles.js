@@ -8,6 +8,7 @@ export const Container = styled.div`
   padding-top: 100px;
   margin: 0 auto;
   display: flex;
+
 `;
 
 
@@ -42,7 +43,7 @@ export const HeaderPost = styled.div`
   font: 400 14px "Roboto";
   border-bottom: 1px solid #e6e6e6;
   display: flex;
-  display: "inline-block"
+  display: "inline-block";
 
 `;
 

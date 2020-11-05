@@ -16,7 +16,9 @@ export const Signin = () => {
     const [showpwd, setShowpwd] = useState(false);
     const [cheked, setCheked] = useState(false);
     const [rememberUser, setRememberUser] = useState({});
+    const [disabled, setDisabled] = useState(false);
     const { signIn } = useAuth();
+
 
     useEffect(() => {
         const item = localStorage.getItem('@Photogram:username&password');
@@ -112,9 +114,9 @@ export const Signin = () => {
                         <span>Recordar usuario</span>
                     </label>
 
-                    <button type="submit">Iniciar sesión</button>
+                    <button disabled={disabled} type="submit">Iniciar sesión</button>
 
-                    <hr />
+                    <center><div className="divider"><b>O</b></div></center>
 
                     <AuthGoogle buttonTitle={"Iniciar sesión con Google"}/>
 

@@ -2,7 +2,10 @@ import React from 'react';
 import GoogleLogin from "react-google-login";
 import { useHistory } from 'react-router-dom';
 import { useAuth } from '../../hooks/auth';
-//FcGoogle
+import { FcGoogle } from 'react-icons/fc';
+import { ButtonGoogle} from './styles';
+
+
 
 export const AuthGoogle = ({ buttonTitle }) => {
     const history = useHistory();
@@ -22,29 +25,28 @@ export const AuthGoogle = ({ buttonTitle }) => {
         await authWithGoogle(user)
 
         history.push('/');
-
-
     };
 
     return (
-        <div>
+        <ButtonGoogle>
             <GoogleLogin
                 clientId="136692338397-mp7q1rq8r7gr8qcmq08ilqp1g240ne6r.apps.googleusercontent.com"
                 onSuccess={responseGoogle}
                 onFailure={responseGoogle}
 
                 buttonText={buttonTitle}
-            // render={renderProps => (
-            //     <button
-            //         onClick={renderProps.onClick}
-            //         className="btn btn-raised google-button d-flex justify-content-center align-items-center"
-            //         disabled={renderProps.disabled}
-            //     >
-            //         <img src={googleLogo} alt="logo" style={{height:'30px', width:'30px'}}/>
-            //         <span className="pl-2">{buttonTitle}</span>
-            //     </button>
-            // )}
+
+                render={ renderProps => (
+                    <p  style={{marginTop:"9px", marginBottom:"5px",justifyContent: "center", alignItems: "center",   display: "flex",  cursor: "pointer" 
+                    }}
+                        onClick={renderProps.onClick}
+                        disabled={renderProps.disabled}
+                    >
+                        <FcGoogle style={{ height: '20px', width: '20px' }} />
+                        <span style={{ fontSize:"12px", font:"inherit", color:"#385185" ,justifyContent: "center"}}>{buttonTitle}</span>
+                    </p>
+                )}
             />
-        </div>
+        </ButtonGoogle>
     )
 }

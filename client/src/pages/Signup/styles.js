@@ -84,6 +84,40 @@ export const Form = styled(UnformWeb)`
       background-color: #38ff;
     }
   }
+
+  .divider{
+    overflow: hidden;
+    text-align: center;
+    justify-content: center;
+    box-sizing: border-box;
+    color:rgb(165, 164, 164);
+    font-size: 13.5px;
+    font-weight: 500;
+    // top,right,button,left
+    margin: 20px 0 0 5px;
+    width: 300px;
+  }
+
+  .divider:before,
+  .divider:after {
+  background-color: rgb(224, 221, 221);
+  content: "";
+  display: inline-block;
+  height: 1.2px;
+  position: relative;
+  vertical-align: middle;
+  width: 50%;
+}
+
+.divider:before {
+  right: 2em;
+  margin-left: -50%;
+}
+
+.divider:after {
+  left: 2em;
+  margin-right: -50%;
+}
 `
 
 export const Footer = styled.div`

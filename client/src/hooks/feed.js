@@ -9,7 +9,7 @@ const FeedProvider = ({ children }) => {
     const [feeds, setFeeds] = useState([]);
     const [totalFeeds, setTotalFeeds] = useState(0);
 
-    const getFeeds = useCallback(async (page=0) => {
+    const getFeeds = useCallback(async (page) => {
         try {
             const response = await api.get("/feeds", {
                 params: {
@@ -21,6 +21,7 @@ const FeedProvider = ({ children }) => {
             if (response.status === 200) {
                 setFeeds((state) => [...state, ...response.data.feeds]);
                 setTotalFeeds(response.data.totalFeeds)
+               
             }
             
         } catch (error) {
@@ -59,7 +60,6 @@ const FeedProvider = ({ children }) => {
     const addFeed = useCallback((data) => {
         setFeeds((state) => ([data, ...state]));
     }, [])
-
 
     return (
         <FeedContext.Provider value={{ feeds, totalFeeds, getFeeds, deletePhotoAction, deleteFollowAction, addFeed, setFeeds }}>

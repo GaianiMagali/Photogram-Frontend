@@ -21,12 +21,13 @@ export const CardFeed = ({ feed }) => {
 
     const { isAuthor, isLiked, photo } = feed;
     const [like, setLike] = useState(isLiked);
-
     const [commentsPhoto, setCommentsPhoto] = useState(photo.getComments);
     const [comment, setComment] = useState('');
     const [disabled, setDisabled] = useState(true);
+    const [likeCount, setLikeCount] = useState(0);
 
     useEffect(() => {
+        setLikeCount(photo.getLikes.length)
         if (comment.trim()) {
             setDisabled(false);
         } else {
@@ -34,15 +35,6 @@ export const CardFeed = ({ feed }) => {
         }
     }, [comment])
 
-    const toggleLike = useCallback(async (photo_id) => {
-        const response = await api.post(`/likes/${photo_id}`);
-
-        if (response.status === 200) {
-            setLike(!like);
-        } else {
-            toast.error('Probablemente esta publicación ya no existe!');
-        }
-    }, [like])
 
     const handleComment = useCallback((event) => {
         setComment(event.target.value);
@@ -62,6 +54,19 @@ export const CardFeed = ({ feed }) => {
 
     }, [comment, photo.id])
 
+    const toggleLike = useCallback(async (photo_id) => {
+        const response = await api.post(`/likes/${photo_id}`);
+        console.log(response.data);
+        if (response.status === 200) {
+            setLike(!like);
+            const { data } = await api.get(`/photos/${photo_id}`);
+            const { photo } = data;
+            setLikeCount(photo.LikesCount);
+        } else {
+            toast.error('Probablemente esta publicación ya no existe!');
+        }
+    }, [like])
+
     return (
         <Card>
             <CardHeader>
@@ -80,23 +85,32 @@ export const CardFeed = ({ feed }) => {
             </ContainerPhoto>
 
             <CardControls>
-                {like ? (
-                    <FaHeart
-                        onClick={() => toggleLike(photo.id)}
-                        size={20}
-                        style={{ color: "#FC4850", marginRight: 10, cursor: "pointer" }}
-                    />
-                ) : (
-                    <FiHeart
-                        onClick={() => toggleLike(photo.id)}
-                        size={20}
-                        style={{ marginRight: 10, cursor: "pointer" }}
-                    />
-                )}
+                <div style={{ display: "inline-block", position: "relative" }}>
+                    {like ? (
+                        <FaHeart
+                            onClick={() => toggleLike(photo.id)}
+                            size={20}
+                            style={{ color: "#FC4850", marginRight: 10, cursor: "pointer" }}
+                        />
+                    ) : (
+                            <FiHeart
+                                onClick={() => toggleLike(photo.id)}
+                                size={20}
+                                style={{ marginRight: 10, cursor: "pointer" }}
+                            />
+                        )}
 
-                <Link to={`/photo/${photo.id}`}>
-                    <FaComment size={20} color="#2c2c2c" />
-                </Link>
+                    <Link to={`/photo/${photo.id}`}>
+                        <FaComment size={20} color="#2c2c2c" />
+                    </Link>
+
+                    <div style={{
+                        marginTop: 4,
+                        marginBottom: 4,
+                    }}>
+                        <span style={{ fontSize: "14px" }}>{likeCount} Me gusta</span>
+                    </div>
+                </div>
             </CardControls>
 
             <CardDetails>
