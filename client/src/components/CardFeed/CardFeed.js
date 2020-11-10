@@ -35,7 +35,7 @@ export const CardFeed = ({ feed }) => {
         }
     }, [comment])
 
-
+   
     const handleComment = useCallback((event) => {
         setComment(event.target.value);
     }, [])

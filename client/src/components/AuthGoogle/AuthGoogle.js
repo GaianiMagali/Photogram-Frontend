@@ -5,8 +5,6 @@ import { useAuth } from '../../hooks/auth';
 import { FcGoogle } from 'react-icons/fc';
 import { ButtonGoogle} from './styles';
 
-
-
 export const AuthGoogle = ({ buttonTitle }) => {
     const history = useHistory();
     const { authWithGoogle } = useAuth();

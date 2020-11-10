@@ -32,6 +32,7 @@ export const Post = () => {
             setDisabled(true);
         }
     }, [comment])
+  
 
     useEffect(() => {
         async function getPost() {
@@ -43,6 +44,8 @@ export const Post = () => {
             setIsLiked(isLiked);
             setIsAuthor(isAuthor);
         }
+
+       
 
         getPost();
     }, [photo_id, isLiked])
@@ -99,7 +102,6 @@ export const Post = () => {
                                 img={post.uploadedBy.avatar_url}
                                 username={post.uploadedBy.username}
                             />
-                            <p>{post.body}</p>
 
                             <ModalOptionsPost isAuthor={isAuthor} photo={post} />
                         </HeaderPost>

@@ -21,6 +21,7 @@ const UploadProvider = ({ children }) => {
 
       if (res.status === 200) {
         setData(res.data);
+        console.log(res.data);
       }
     } catch (error) {
       if (error.response.status === 500) {

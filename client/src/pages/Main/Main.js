@@ -9,6 +9,8 @@ import { Profile } from '../../components/Profile/Profile';
 import { useFeed } from '../../hooks/feed';
 import { CardFeed } from '../../components/CardFeed/CardFeed';
 
+import { v4 as uuidv4 } from 'uuid';
+
 export const Main = () => {
     const [page, setPage] = useState(1);
     const { user } = useAuth();
@@ -107,8 +109,8 @@ export const Main = () => {
                 </Aside>
 
                 <ContainerFeeds>
-                    {feeds && feeds.map((feed, i) => (
-                        <CardFeed key={i} feed={feed} />
+                    {feeds && feeds.map((feed) => (
+                        <CardFeed key={uuidv4()} feed={feed} />
                     ))}
 
                     {!!feeds && feeds.length > 0 && (
